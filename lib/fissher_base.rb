@@ -42,6 +42,7 @@ class FissherBase
           end
         end
       else
+        # Sudo isn't needed. We don't need a PTY.
         session.exec(opts["command"]) 
       end
 

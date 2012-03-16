@@ -23,9 +23,33 @@ module FissherConf
     end
   end
 
+  def usage
+    puts "$0 [flags] [command]:\n"
+    puts "-G Hostgroup       Execute command on all hosts listed in the JSON config for the\n"
+    puts "                   specified group.\n"
+    puts "-H Host1,Host2     Execute command on hosts listed on the command line\n"
+    puts "-g jumpbox         Manually specify/override a jump server, if necessary.\n"
+    puts "-s 		     Execute the provided commands with sudo."
+    puts "-u username        Manually specify/override username to connect with.\n"
+    puts "-p                 Use password based authentication, specified via STDIN\n"
+    puts "-c config.json     Manually specify the path to your fissher config file\n"
+    puts "-n num             Number of concurrent connections. Enter 0 for unlimited.\n"
+  end
+
+  def die( msg )
+    puts "#{msg}\n"
+    usage
+    exit 1
+  end
+
   def handle_opts
-    opt = Getopt::Std.getopts("pc:C:g:G:u:n:sH:")
+    opt = Getopt::Std.getopts("pc:g:G:u:n:sH:h")
     ret = { }
+
+    if opt["h"]
+      usage
+      exit 1
+    end
  
     # Import configuration, either from default or a custom JSON config
     if opt["c"]
@@ -43,9 +67,9 @@ module FissherConf
     # Gateway if an edgeserver is present
     if opt["g"]
       ret["gateway"] = opt["g"]
-    elsif opt["G"] && config["hostgroups"]["#{opt['G']}"]
+    elsif opt["G"] && !config["hostgroups"]["#{opt['G']}"]["gateway"].nil?
       ret["gateway"] = config["hostgroups"]["#{opt['G']}"]["gateway"]
-    elsif config['default_gateway']
+    elsif !config['default_gateway'].nil?
       ret["gateway"] = config['default_gateway']
     end  
 
@@ -92,6 +116,7 @@ module FissherConf
       ret["password"] = nil
     end
     
+    # Our command
     if ARGV.count >= 1
       if sudo
         ret["command"] = "sudo " + ARGV.join(' ').to_s
@@ -99,7 +124,7 @@ module FissherConf
         ret["command"] = ARGV.join(' ').to_s 
       end
     else
-      abort "No command specified!\n" unless !ret["command"].nil?
+      die "No command specified!\n" unless !ret["command"].nil?
     end
     ret
   end
