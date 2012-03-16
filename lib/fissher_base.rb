@@ -8,7 +8,7 @@ include FissherConf
 
 class FissherBase
   def go_time
-    opts = FissherConf.handle_opts
+    opts = FissherConf.handle_opts unless !opts.nil?
 
     Net::SSH::Multi.start(:concurrent_connections => opts["concurrency"]) do |session|
       if opts["gateway"]
