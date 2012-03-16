@@ -1,4 +1,4 @@
 
-== fissher ==
+== fissher
 
 Fissher is a simple utility to run commands on multiple servers easily.
