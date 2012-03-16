@@ -1,5 +1,5 @@
 
-== fissher
+== Fissher
 
 Fissher is a simple utility to run commands on multiple servers, powered by Net::SSH::Multi.
 
