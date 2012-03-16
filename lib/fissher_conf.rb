@@ -24,7 +24,7 @@ module FissherConf
   end
 
   def usage
-    puts "$0 [flags] [command]:\n"
+    puts "#{$0} [flags] [command]:\n"
     puts "-G Hostgroup       Execute command on all hosts listed in the JSON config for the\n"
     puts "                   specified group.\n"
     puts "-H Host1,Host2     Execute command on hosts listed on the command line\n"
