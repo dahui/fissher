@@ -34,6 +34,7 @@ module FissherConf
     puts "-p                 Use password based authentication, specified via STDIN\n"
     puts "-c config.json     Manually specify the path to your fissher config file\n"
     puts "-n num             Number of concurrent connections. Enter 0 for unlimited.\n"
+    puts "-U username	     Specify an alternate user in conjunction with -s (E.G. -U webmaster)\n"
   end
 
   def die( msg )
@@ -43,7 +44,7 @@ module FissherConf
   end
 
   def handle_opts
-    opt = Getopt::Std.getopts("pc:g:G:u:n:sH:h")
+    opt = Getopt::Std.getopts("pc:g:G:u:n:sH:hU:")
     ret = { }
 
     if opt["h"]
@@ -61,7 +62,11 @@ module FissherConf
     
     # Use sudo for our command
     if opt["s"]
-      sudo = true
+      if opt["U"]
+        sudo_cmd = "sudo -u #{opt['U']}"
+      else
+        sudo_cmd = "sudo"
+      end
     end
 
     # Gateway if an edgeserver is present
@@ -118,8 +123,8 @@ module FissherConf
     
     # Our command
     if ARGV.count >= 1
-      if sudo
-        ret["command"] = "sudo " + ARGV.join(' ').to_s
+      if sudo_cmd
+        ret["command"] = "#{sudo_cmd} " + ARGV.join(' ').to_s
       else
         ret["command"] = ARGV.join(' ').to_s 
       end
