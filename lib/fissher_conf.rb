@@ -15,8 +15,8 @@ module FissherConf
 
     # Method for returning hosts from hostgroup.
     def group_hosts( grp,conf,conf_file )
-      if conf["hostgroups"]["#{grp}"] 
-        conf["hostgroups"]["#{grp}"]["hosts"]
+      if conf[:hostgroups][:"#{grp}"] 
+        conf[:hostgroups][:"#{grp}"][:hosts]
       else
         abort "Fatal: hostgroup #{grp} not defined in #{conf_file}!\n"
       end
@@ -58,7 +58,7 @@ module FissherConf
     else
       conf_file = File.dirname(__FILE__)  + "/../etc/fissher.json"
     end
-    config = JSON.parse(File.read(conf_file))
+    config = JSON.parse(File.read(conf_file),:symbolize_names => true)
     
     # Use sudo for our command
     if opt["s"]
@@ -72,10 +72,10 @@ module FissherConf
     # Gateway if an edgeserver is present
     if opt["g"]
       ret[:gateway] = opt["g"]
-    elsif opt["G"] && !config["hostgroups"]["#{opt['G']}"]["gateway"].nil?
-      ret[:gateway] = config["hostgroups"]["#{opt['G']}"]["gateway"]
-    elsif !config['default_gateway'].nil?
-      ret[:gateway] = config['default_gateway']
+    elsif opt["G"] && !config[:hostgroups][:"#{opt['G']}"][:gateway].nil?
+      ret[:gateway] = config[:hostgroups][:"#{opt['G']}"][:gateway]
+    elsif !config[:default_gateway].nil?
+      ret[:gateway] = config[:default_gateway]
     end  
 
     # Hostgroup used for batch jobs
@@ -88,8 +88,8 @@ module FissherConf
     # Username used by connections
     if opt["u"]
       ret[:user] = opt['u']
-    elsif config['user']
-      ret[:user] = config['user']
+    elsif config[:user]
+      ret[:user] = config[:user]
     end
   
     # Job Concurrency limit
@@ -98,7 +98,7 @@ module FissherConf
     elsif opt["n"]
       ret[:concurrency] = opt["n"].to_i
     elsif config[:concurrency]
-      ret[:concurrency] = config['concurrency'].to_i
+      ret[:concurrency] = config[:concurrency].to_i
     else
       ret[:concurrency] = 10
     end
