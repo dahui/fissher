@@ -9,6 +9,7 @@ include FissherConf
 class FissherBase
   def go_time
     opts = FissherConf.handle_opts unless !opts.nil?
+    abort "No hosts specified! Please use -H or -G!\n" unless !opts[:hostlist].nil?
 
     Net::SSH::Multi.start(:concurrent_connections => opts[:concurrency]) do |session|
       if opts[:gateway]
@@ -16,7 +17,6 @@ class FissherBase
       end
 
       # Create our connection list
-      abort "No hosts specified! Please use -H or -G!\n" unless !opts[:hostlist].nil?
       opts[:hostlist].each do |host|
         session.use host, :user => opts[:user], :password => opts[:password]
       end
