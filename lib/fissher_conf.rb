@@ -47,6 +47,10 @@ module FissherConf
     opt = Getopt::Std.getopts("pc:g:G:u:n:sH:hU:")
     ret = { }
 
+    if opt["H"].nil? && opt["G"].nil?
+      die "You must specify one of -H or -G!"
+    end
+
     if opt["h"]
       usage
       exit 1
