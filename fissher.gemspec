@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "A utility written to perform batch commands on many servers over SSH. Supports jump servers and hostgroups via a JSON config file."
   s.authors     = ["Jeff Hagadorn"]
   s.email       = 'jeff@aletheia.io'
-  s.files       = ["lib/fissher_conf.rb", "lib/fissher_base.rb"]
+  s.files       = ["lib/fissher_conf.rb", "lib/fissher_base.rb", "etc/fissher.conf.sample", "README.rdoc"]
   s.executables	= [ "fissher" ]
   s.homepage    =
     'http://rubygems.org/gems/fissher'

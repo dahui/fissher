@@ -67,7 +67,7 @@ module FissherConf
     begin 
       config = JSON.parse(File.read(conf_file),:symbolize_names => true)
     rescue
-      abort "FATAL: Problem opening config file #{conf_file}! Does the file exist?\n "
+      abort "FATAL: Problem opening config file #{conf_file}! Does the file exist?\n\n Please remember to copy the sample config from  "
     end
     
     # Use sudo for our command
