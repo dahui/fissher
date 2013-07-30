@@ -58,7 +58,13 @@ module FissherConf
     else
       conf_file = File.dirname(__FILE__)  + "/../etc/fissher.json"
     end
-    config = JSON.parse(File.read(conf_file),:symbolize_names => true)
+    
+    # Ensure the file exists
+    begin 
+      config = JSON.parse(File.read(conf_file),:symbolize_names => true)
+    rescue
+      abort "FATAL: Problem opening config file #{conf_file}! Does the file exist?\n "
+    end
     
     # Use sudo for our command
     if opt["s"]
