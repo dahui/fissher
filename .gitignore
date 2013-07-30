@@ -19,4 +19,4 @@ _yardoc
 doc/
 
 # Fissher configs
-etc/fissher.json
+etc/fissher.conf
