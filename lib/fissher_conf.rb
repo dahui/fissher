@@ -55,8 +55,12 @@ module FissherConf
     # Import configuration, either from default or a custom JSON config
     if opt["c"]
       conf_file = opt["c"]
+    elsif File.exists?("#{Dir.home}/.fissherrc")
+      conf_file = "#{Dir.home}/.fissherrc"
+    elsif File.exists?("/etc/fissher/fissher.conf")
+      conf_file = "/etc/fissher/fissher.conf"
     else
-      conf_file = File.dirname(__FILE__)  + "/../etc/fissher.json"
+      conf_file = File.dirname(__FILE__)  + "/../etc/fissher.conf"
     end
     
     # Ensure the file exists
