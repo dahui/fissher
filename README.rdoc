@@ -18,7 +18,7 @@ Fissher is a simple utility to run commands on multiple servers, powered by Net:
 
 === Installation
 
-==== Via rubygems (Recommended)
+==== Via Rubygems (Recommended)
 
 Simply run the following:
 
@@ -27,7 +27,7 @@ Simply run the following:
 ==== Manual
 
 * Place the code into a directory by either unarchiving it or checking it out via git.
-* Run bundle to install the dependency gems (getopt, net-ssh-multi, net-ssh-session, json, highline)
+* Run bundler to install the dependency gems (getopt, net-ssh-multi, net-ssh-session, json, highline)
 
 === JSON Config file
 
