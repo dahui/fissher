@@ -45,7 +45,7 @@ module FissherConf
 
   def handle_opts
     opt = Getopt::Std.getopts("pc:g:G:u:n:sH:hU:")
-    ret = { }
+    ret = Hash.new
 
     if opt["h"]
       usage
@@ -67,7 +67,25 @@ module FissherConf
     begin 
       config = JSON.parse(File.read(conf_file),:symbolize_names => true)
     rescue
-      abort "FATAL: Problem opening config file #{conf_file}! Does the file exist?\n\n Please remember to copy the sample config from  "
+
+      etcloc = File.dirname(__FILE__).to_s.gsub(/\/lib$/, '/etc')
+      puts <<EOB
+  ****    It appears that you have not yet created your config file!    ****
+  You can do this by copying the sample config to one of the following
+  locations:
+
+  ~/.fissherrc
+  /etc/fissher/fissher.conf
+  #{etcloc}/fissher.conf
+
+  You can find a copy of the sample in the following location:
+
+  #{etcloc}
+
+  A script will be included in the next release that will generate the file
+  for you if it does not already exist.
+EOB
+      abort
     end
     
     # Use sudo for our command
