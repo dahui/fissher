@@ -161,14 +161,6 @@ EOB
       end
     end
 
-    # Get our account password
-    if (opt["p"] || config[:enable_password] == 'true')
-      p = Misc.new
-      ret[:password] = p.getpass()
-    else
-      ret[:password] = nil
-    end
-    
     # Our command
     if ARGV.count >= 1
       if sudo_cmd
@@ -179,6 +171,15 @@ EOB
     else
       die "No command specified!\n" unless !ret[:command].nil?
     end
+
+    # Get our account password
+    if (opt["p"] || config[:enable_password] == 'true')
+      p = Misc.new
+      ret[:password] = p.getpass()
+    else
+      ret[:password] = nil
+    end
+    
     ret
   end
 end
