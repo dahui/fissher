@@ -45,7 +45,7 @@ module FissherConf
                      the specified group.
   -H Host1,Host2     Execute command on hosts listed on the command line
   -g jumpbox         Manually specify/override a jump server, if necessary.
-  -s 		     Execute the provided commands with sudo.  Supersedes -U.
+  -s 		     Execute the provided commands with sudo.   
   -u username        Manually specify/override username to connect with.
   -p                 Use password based authentication, specified via STDIN
   -c config.json     Manually specify the path to your fissher config file
@@ -116,7 +116,7 @@ EOB
       sudo_cmd = "sudo"
     end
 
-    if opt["U"] && opt["s"].nil?
+    if opt["U"] #&& opt["s"].nil?
       sudo_cmd = "sudo -u #{opt['U']}"
     end
 

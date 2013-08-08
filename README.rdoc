@@ -10,13 +10,13 @@ Fissher is a simple utility to run commands on multiple servers, powered by Net:
                        the specified group.
     -H Host1,Host2     Execute command on hosts listed on the command line
     -g jumpbox         Manually specify/override a jump server, if necessary.
-    -s 		     Execute the provided commands with sudo.  Supersedes -U.
+    -s 		       Execute the provided commands with sudo.
     -u username        Manually specify/override username to connect with.
     -p                 Use password based authentication, specified via STDIN
     -c config.json     Manually specify the path to your fissher config file
     -n num             Number of concurrent connections. Enter 0 for unlimited.
-    -U username	     Specify an alternate user to run the command as. Uses sudo.
-                     (E.G. -U webmaster)
+    -U username	       Specify an alternate user to run the command as. Uses sudo.
+                       (E.G. -U webmaster)
 
 === Installation
 
