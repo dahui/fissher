@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'fissher'
-  s.version     = '1.0.2'
+  s.version     = '1.0.3'
   s.date        = '2013-08-02'
   s.summary     = "Fissher"
   s.description = "A utility written to perform batch commands on many servers over SSH. Supports jump servers and hostgroups via a JSON config file."
