@@ -24,17 +24,19 @@ module FissherConf
   end
 
   def usage
-    puts "#{$0} [flags] [command]:\n"
-    puts "-G Hostgroup       Execute command on all hosts listed in the JSON config for the\n"
-    puts "                   specified group.\n"
+    app = File.basename($0)
+    puts "#{app} [flags] [command]:\n"
+    puts "-G Hostgroup       Execute command on all hosts listed in the JSON config for \n"
+    puts "                   the specified group.\n"
     puts "-H Host1,Host2     Execute command on hosts listed on the command line\n"
     puts "-g jumpbox         Manually specify/override a jump server, if necessary.\n"
-    puts "-s 		     Execute the provided commands with sudo."
+    puts "-s 		   Execute the provided commands with sudo."
     puts "-u username        Manually specify/override username to connect with.\n"
     puts "-p                 Use password based authentication, specified via STDIN\n"
     puts "-c config.json     Manually specify the path to your fissher config file\n"
     puts "-n num             Number of concurrent connections. Enter 0 for unlimited.\n"
-    puts "-U username	     Specify an alternate user in conjunction with -s (E.G. -U webmaster)\n"
+    puts "-U username	   Specify an alternate user in conjunction with -s\n" 
+    puts "                   (E.G. -U webmaster)\n"
   end
 
   def die( msg )
@@ -142,7 +144,7 @@ EOB
     end
 
     # Get our account password
-    if opt["p"]
+    if (opt["p"] || config[:enable_password] == 'true')
       p = Misc.new
       ret[:password] = p.getpass()
     else
