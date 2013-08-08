@@ -2,6 +2,7 @@
   "user": "user",				   // Default user name
   "concurrency": "10", 				   // Set to 0 to disable max concurrency
   "default_gateway": "jumpbox1.sampledomain.com",  // Default jump box, if needed.
+  "enable_password": "false", 			   // Set this to true to enable -p by default.
   "hostgroups": {				   
     "app": {
       "gateway": "jumpbox2.sampledomain.com",  // Override the default
