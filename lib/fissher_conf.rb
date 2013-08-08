@@ -39,18 +39,20 @@ module FissherConf
   # Print usage message
   def usage
     app = File.basename($0)
-    puts "#{app} [flags] [command]:\n"
-    puts "-G Hostgroup       Execute command on all hosts listed in the JSON config for \n"
-    puts "                   the specified group.\n"
-    puts "-H Host1,Host2     Execute command on hosts listed on the command line\n"
-    puts "-g jumpbox         Manually specify/override a jump server, if necessary.\n"
-    puts "-s 		   Execute the provided commands with sudo."
-    puts "-u username        Manually specify/override username to connect with.\n"
-    puts "-p                 Use password based authentication, specified via STDIN\n"
-    puts "-c config.json     Manually specify the path to your fissher config file\n"
-    puts "-n num             Number of concurrent connections. Enter 0 for unlimited.\n"
-    puts "-U username	   Specify an alternate user in conjunction with -s\n" 
-    puts "                   (E.G. -U webmaster)\n"
+    puts <<-EOF
+#{app} [flags] [command]:
+  -G Hostgroup       Execute command on all hosts listed in the JSON config for
+                     the specified group.
+  -H Host1,Host2     Execute command on hosts listed on the command line
+  -g jumpbox         Manually specify/override a jump server, if necessary.
+  -s 		     Execute the provided commands with sudo.  Supersedes -U.
+  -u username        Manually specify/override username to connect with.
+  -p                 Use password based authentication, specified via STDIN
+  -c config.json     Manually specify the path to your fissher config file
+  -n num             Number of concurrent connections. Enter 0 for unlimited.
+  -U username	     Specify an alternate user to run the command as. Uses sudo.
+                     (E.G. -U webmaster)
+    EOF
   end
 
   # A shortcut method to make errors a little more graceful.
@@ -108,13 +110,14 @@ EOB
       abort
     end
     
+
     # Use sudo for our command
     if opt["s"]
-      if opt["U"]
-        sudo_cmd = "sudo -u #{opt['U']}"
-      else
-        sudo_cmd = "sudo"
-      end
+      sudo_cmd = "sudo"
+    end
+
+    if opt["U"] && opt["s"].nil?
+      sudo_cmd = "sudo -u #{opt['U']}"
     end
 
     # Gateway if an edgeserver is present
