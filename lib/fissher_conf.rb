@@ -7,13 +7,26 @@ require 'json'
 require 'highline/import'
 require 'getopt/std'
 
+# Module for all aspects of configuration within fissher.
 module FissherConf
+  
+  # Misc methods for doing dirty work within the app.
   class Misc
+    
+    # A wrapper function used to request the password from stdin.
+    #
+    # @param prompt [String] The banner displayed to the user.
+    # @return [String] The password, as entered by the user.
     def getpass(prompt="Enter remote password: ")
       ask(prompt) {|q| q.echo = false}
     end
 
     # Method for returning hosts from hostgroup.
+    #
+    # @param grp [String] The hostgroup, contained within the config.
+    # @param conf [Hash] The parsed configuration file
+    # @param conf_file [String] The configuration file, with path.
+    # @return [Array] An array of the hosts contained in the hostgroup within the config file.
     def group_hosts( grp,conf,conf_file )
       if conf[:hostgroups][:"#{grp}"] 
         conf[:hostgroups][:"#{grp}"][:hosts]
@@ -23,6 +36,7 @@ module FissherConf
     end
   end
 
+  # Print usage message
   def usage
     app = File.basename($0)
     puts "#{app} [flags] [command]:\n"
@@ -39,12 +53,16 @@ module FissherConf
     puts "                   (E.G. -U webmaster)\n"
   end
 
+  # A shortcut method to make errors a little more graceful.
+  #
+  # @param msg [String] the message to be displayed before the usage message.
   def die( msg )
     puts "#{msg}\n"
     usage
     exit 1
   end
 
+  # Parse command line options using getopt and options within the json config file.
   def handle_opts
     opt = Getopt::Std.getopts("pc:g:G:u:n:sH:hU:")
     ret = Hash.new

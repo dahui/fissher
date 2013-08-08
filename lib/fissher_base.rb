@@ -6,7 +6,9 @@ require 'net/ssh/multi'
 require 'fissher_conf'
 include FissherConf
 
+# Main class. This one does all the dirty work.
 class FissherBase
+  # The guts of the app. This handles putting everything together and running the commands via Net::SSH::Multi.
   def go_time
     opts = FissherConf.handle_opts unless !opts.nil?
     abort "No hosts specified! Please use -H or -G!\n" unless !opts[:hostlist].nil?
