@@ -24,7 +24,9 @@ Fissher is a simple utility to run commands on multiple servers, powered by Net:
 
 Simply run the following:
 
-  gem install fissher                             {<img src="https://badge.fury.io/rb/fissher.png" alt="Gem Version" />}[http://badge.fury.io/rb/fissher]
+  gem install fissher                             
+
+{<img src="https://badge.fury.io/rb/fissher.png" alt="Gem Version" />}[http://badge.fury.io/rb/fissher]
 
 
 ==== Manual
