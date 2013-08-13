@@ -13,7 +13,7 @@ class FissherBase
     opts = FissherConf.handle_opts unless !opts.nil?
     abort "No hosts specified! Please use -H or -G!\n" unless !opts[:hostlist].nil?
 
-    Net::SSH::Multi.start(:concurrent_connections => opts[:concurrency]) do |session|
+    Net::SSH::Multi.start(:concurrent_connections => opts[:concurrency], :on_error => :warn) do |session|
       if opts[:gateway]
         session.via opts[:gateway], opts[:user], :password => opts[:password]
       end
@@ -42,7 +42,7 @@ class FissherBase
               end
             end
           end
-        end
+        end 
       else
         # Sudo isn't needed. We don't need a PTY.
         session.exec(opts[:command]) 
